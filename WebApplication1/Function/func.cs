@@ -265,5 +265,58 @@ namespace WebApplication1.Function
                 return false;
             }
         }
+        public static List<Brand> getAllBrands()
+        {
+            using(var _context=new DBDongho())
+            {
+                _context.Configuration.LazyLoadingEnabled = false;
+                var dbbrand = (from br in _context.Brands
+                               select br).ToList();
+                return dbbrand;
+            }
+        }
+        public static bool delBrand(int id)
+        {
+            try
+            {
+                using (var _context = new DBDongho())
+                {
+                    var dbbr = (from br in _context.Brands
+                                 where br.ID == id
+                                 select br).SingleOrDefault();
+                    _context.Brands.Remove(dbbr);
+                    _context.SaveChanges();
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        public static void createBrand(Brand brand)
+        {
+            using( var _context=new DBDongho())
+            {
+                _context.Brands.Add(brand);
+                _context.SaveChanges();
+            }
+        }
+        public static bool EditBrand(Brand brand)
+        {
+            try
+            {
+                using (var _context = new DBDongho())
+                {
+                    _context.Brands.AddOrUpdate(brand);
+                    _context.SaveChanges();
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

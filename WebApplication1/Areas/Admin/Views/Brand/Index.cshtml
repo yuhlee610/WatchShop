@@ -18,8 +18,8 @@
                         <th>ID</th>
                         <th>Name</th>
                         <th>Description</th>
+                        <th>HomePage</th>
                         <th>Picture</th>
-
                     </tr>
                 </thead>
                 <tfoot>
@@ -27,7 +27,9 @@
                         <th>ID</th>
                         <th>Name</th>
                         <th>Description</th>
+                        <th>HomePage</th>
                         <th>Picture</th>
+
                     </tr>
                 </tfoot>
                 <tbody>
@@ -40,12 +42,58 @@
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createModal">Create</button>
 <button type="button" class="btn btn-primary" id="edit">Edit</button>
 <button type="button" id="del" class="btn btn-primary">Delete</button>
+
+
+<!-- Modal create-->
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create brand</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-warning  d-none" role="alert" id="alert"></div>
+                <form action="/" method="post">
+
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="descrip">Description</label>
+                        <input type="text" class="form-control" id="descrip">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="homepage">HomePage</label>
+                        <input type="text" class="form-control" id="homepage">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pic">Picture</label>
+                        <input type="text" class="form-control" id="pic">
+                    </div>
+
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="create" class="btn btn-primary">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Modal edit-->
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Create category</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Edit category</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -69,11 +117,14 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="edit_homepage">HomePage</label>
+                        <input type="text" class="form-control" id="edit_homepage">
+                    </div>
+
+                    <div class="form-group">
                         <label for="edit_pic">Picture</label>
                         <input type="text" class="form-control" id="edit_pic">
                     </div>
-
-
                 </form>
             </div>
             <div class="modal-footer">
@@ -83,64 +134,27 @@
         </div>
     </div>
 </div>
-<!-- Modal create-->
-<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit category</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="alert alert-warning  d-none" role="alert" id="alert"></div>
-                <form action="/" method="post">
 
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" class="form-control" id="name">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="descrip">Description</label>
-                        <input type="text" class="form-control" id="descrip">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="pic">Picture</label>
-                        <input type="text" class="form-control" id="pic">
-                    </div>
-
-
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" id="create" class="btn btn-primary">Add</button>
-            </div>
-        </div>
-    </div>
-</div>
 @section scripts{
     <script>
-        //Load data to table
         $(document).ready(function () {
+            //load data
             var myTable = $("#myTable").DataTable({
                 "ajax": {
-                    "url": "/Admin/Category/GetData",
+                    "url": "/Admin/Brand/GetData",
                     "type": "GET",
                     "dataSrc": '',
                     "datatype": "json"
                 },
                 "columns": [
                     { "data": "ID" },
-                    { "data": "cateName" },
-                    { "data": "cateDescription" },
+                    { "data": "brandName" },
+                    { "data": "brandDesription" },
+                    { "data": "brandHomePage" },
                     {
-                        "data": "catePicture",
+                        "data": "brandPiture",
                         "render": function (data, type, row) {
-                            return '<img src="' + data + '"width="160" height="160" />';
+                            return '<img src="' + data + '"width="160" height="160" >';
                         }
                     }
                 ]
@@ -161,7 +175,7 @@
             $("#del").click(function () {
                 var id = myTable.cell('.selected', 0).data();
                 $.ajax({
-                    url: "/Admin/Category/DelCategory",
+                    url: "/Admin/Brand/DelBrand",
                     data: { id: id },
                     success: function (response) {
                         if (response == "fail") {
@@ -175,15 +189,15 @@
                 });
             });
 
-            //create category
+            //create brand
             $("#create").click(function () {
                 var formData = new FormData();
-                formData.append("ID", $("#id").val());
-                formData.append("cateName", $("#name").val());
-                formData.append("cateDescription", $("#descrip").val());
-                formData.append("catePicture", $("#pic").val());
+                formData.append("brandName", $("#name").val());
+                formData.append("brandDesription", $("#descrip").val());
+                formData.append("brandPiture", $("#pic").val());
+                formData.append("brandHomePage", $("#homepage").val());
                 $.ajax({
-                    url: "/Admin/Category/CreateCategory",
+                    url: "/Admin/Brand/CreateBrand",
                     type: 'POST',
                     cache: false,
                     contentType: false,
@@ -196,26 +210,26 @@
                 });
             });
 
+            //load information of brand
             $("#edit").click(function () {
                 $("#editModal").modal("show");
-                //var id = myTable.cell('.selected', 0).data();
-                //var name = myTable.cell('.selected', 1).data();
-                //var descrip = myTable.cell('.selected', 2).data();
-                //var pic = myTable.cell('.selected', 3).data();
                 $("#edit_id").val(myTable.cell('.selected', 0).data());
                 $("#edit_name").val(myTable.cell('.selected', 1).data());
                 $("#edit_descrip").val(myTable.cell('.selected', 2).data());
-                $("#edit_pic").val(myTable.cell('.selected', 3).data());
+                $("#edit_homepage").val(myTable.cell('.selected', 3).data());
+                $("#edit_pic").val(myTable.cell('.selected', 4).data());
             });
 
+            //update brand
             $("#update").click(function () {
                 var formData = new FormData();
                 formData.append("ID", $("#edit_id").val());
-                formData.append("cateName", $("#edit_name").val());
-                formData.append("cateDescription", $("#edit_descrip").val());
-                formData.append("catePicture", $("#edit_pic").val());
+                formData.append("brandName", $("#edit_name").val());
+                formData.append("brandDesription", $("#edit_descrip").val());
+                formData.append("brandPiture", $("#edit_pic").val());
+                formData.append("brandHomePage", $("#edit_homepage").val());
                 $.ajax({
-                    url: "/Admin/Category/EditCategory",
+                    url: "/Admin/Brand/EditBrand",
                     type: 'POST',
                     cache: false,
                     contentType: false,
