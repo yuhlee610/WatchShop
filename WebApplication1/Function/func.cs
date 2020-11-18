@@ -42,6 +42,18 @@ namespace WebApplication1.Function
 
             return ranCod;
         }
+
+        public static List<Category> getAllCategories()
+        {
+            using (var _context = new DBDongho())
+            {
+                _context.Configuration.LazyLoadingEnabled = false;
+                var dbcat = (from cat in _context.Categories
+                             select cat).ToList();
+                return dbcat;
+            }
+        }
+
         private static string RandomString(int size, bool lowerCase)
         {
             System.Text.StringBuilder sb = new StringBuilder();
@@ -201,6 +213,49 @@ namespace WebApplication1.Function
                 using (var _context = new DBDongho())
                 {
                     _context.Products.AddOrUpdate(prod);
+                    _context.SaveChanges();
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        public static bool delCategory(int id)
+        {
+            try
+            {
+                using (var _context = new DBDongho())
+                {
+                    var dbcat = (from cat in _context.Categories
+                                 where cat.ID == id
+                                 select cat).SingleOrDefault();
+                    _context.Categories.Remove(dbcat);
+                    _context.SaveChanges();
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        public static void createCategory(Category cate)
+        {
+            using (var _context = new DBDongho())
+            {
+                _context.Categories.Add(cate);
+                _context.SaveChanges();
+            }
+        }
+        public static bool EditCategory(Category cate)
+        {
+            try
+            {
+                using (var _context = new DBDongho())
+                {
+                    _context.Categories.AddOrUpdate(cate);
                     _context.SaveChanges();
                     return true;
                 }

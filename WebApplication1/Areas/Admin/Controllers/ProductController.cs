@@ -13,9 +13,9 @@ namespace WebApplication1.Areas.Admin.Controllers
         // GET: Admin/Product
         public ActionResult Index()
         {
-            List<Product> lstpro = new List<Product>();
-            lstpro = func.getAllProducts();
-            return View(lstpro);
+            //List<Product> lstpro = new List<Product>();
+            //lstpro = func.getAllProducts();
+            return View();
         }
         public ActionResult GetData()
         {
