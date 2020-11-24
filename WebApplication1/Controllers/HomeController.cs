@@ -17,6 +17,8 @@ namespace WebApplication1.Controllers
         // GET: Home
         public ActionResult Index()
         {
+            List<Category> myList = func.getAllCategories();
+            ViewBag.MyList = myList;
             return View();
         }
         public ActionResult Account()

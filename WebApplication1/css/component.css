@@ -105,14 +105,14 @@ background: url(../images/grid_view.png)no-repeat;
 /* Individual view mode styles */
 /* Large grid view */
 .cbp-vm-view-grid ul li {
-	  width: 31.5555%;
-	  text-align: center;
-	  margin: 2% 2% 0 0;
-	  display: inline-block;
-	  min-height: 380px;
-	  vertical-align: top;
-	  border: 1px solid #f0f0f0;
-	  padding: 5px;
+	width: 29%;
+	text-align: center;
+	margin: 2% 2% 0 0;
+	display: inline-block;
+	min-height: 380px;
+	vertical-align: top;
+	border: 1px solid #f0f0f0;
+	padding: 5px;
 }
 .cbp-vm-view-grid ul li.last{
 	margin:2% 0 0 0;
