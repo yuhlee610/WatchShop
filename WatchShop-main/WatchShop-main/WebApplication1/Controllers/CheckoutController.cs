@@ -34,8 +34,15 @@ namespace WebApplication1.Controllers
         {
             //Dùng ajax gọi function này
             //Xóa sản phẩm dưới database giỏ hàng
-            func.DeleteItemCart(130,Convert.ToInt32(id_pro));
-            return Content("");
+            try
+            {
+                func.DeleteItemCart(130, Convert.ToInt32(id_pro));
+                return Content("");
+            }
+            catch
+            {
+                return Content("");
+            }
         }
     }
 }

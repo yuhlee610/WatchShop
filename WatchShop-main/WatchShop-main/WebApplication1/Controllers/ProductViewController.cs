@@ -37,16 +37,23 @@ namespace WebApplication1.Controllers
         {
             Customer cus = new Customer();
             cus = Session["customers"] as Customer;
-            if (cus == null)
+            try
             {
-                return Content("login");
-            }
-            else
-            {
-                if (func.Add_Item(cus.idUser, Convert.ToInt32(id_pro), Convert.ToInt32(quantity)))
-                    return Content("success");
+                if (cus == null)
+                {
+                    return Content("login");
+                }
                 else
-                    return Content("fail");
+                {
+                    if (func.Add_Item(cus.idUser, Convert.ToInt32(id_pro), Convert.ToInt32(quantity)))
+                        return Content("success");
+                    else
+                        return Content("fail");
+                }
+            }
+            catch
+            {
+                return Content("fail");
             }
         }
     }
