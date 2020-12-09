@@ -8,13 +8,26 @@ namespace WebApplication1.Models
 
     public partial class Order
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Order()
-        {
-            OrderDatails = new HashSet<OrderDatail>();
-        }
+        [Key]
+        [Column(Order = 0)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int id_user { get; set; }
 
-        public int ID { get; set; }
+        [Key]
+        [Column(Order = 1)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int id_product { get; set; }
+
+        public int? id_stt { get; set; }
+
+        public int? quantity { get; set; }
+
+        public decimal? total { get; set; }
+
+        [StringLength(100)]
+        public string addressTo { get; set; }
+
+        public int? id_deli { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime? createDate { get; set; }
@@ -22,17 +35,12 @@ namespace WebApplication1.Models
         [Column(TypeName = "date")]
         public DateTime? requireDate { get; set; }
 
-        [StringLength(250)]
-        public string addressTo { get; set; }
-
-        [StringLength(250)]
-        public string Active { get; set; }
-
-        public int? CustomerID { get; set; }
-
         public virtual Customer Customer { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderDatail> OrderDatails { get; set; }
+        public virtual Delivery Delivery { get; set; }
+
+        public virtual Product Product { get; set; }
+
+        public virtual Status Status { get; set; }
     }
 }

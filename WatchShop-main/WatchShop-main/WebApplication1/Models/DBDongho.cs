@@ -8,7 +8,7 @@ namespace WebApplication1.Models
     public partial class DBDongho : DbContext
     {
         public DBDongho()
-            : base("name=DBDongho1")
+            : base("name=DBDongho")
         {
         }
 
@@ -18,10 +18,11 @@ namespace WebApplication1.Models
         public virtual DbSet<cusAuthe> cusAuthes { get; set; }
         public virtual DbSet<cusAuthe_Roles> cusAuthe_Roles { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
-        public virtual DbSet<OrderDatail> OrderDatails { get; set; }
+        public virtual DbSet<Delivery> Deliveries { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -53,25 +54,18 @@ namespace WebApplication1.Models
 
             modelBuilder.Entity<Customer>()
                 .HasMany(e => e.Orders)
-                .WithOptional(e => e.Customer)
-                .HasForeignKey(e => e.CustomerID);
+                .WithRequired(e => e.Customer)
+                .HasForeignKey(e => e.id_user)
+                .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<OrderDatail>()
-                .Property(e => e.unitPrice)
-                .HasPrecision(18, 0);
-
-            modelBuilder.Entity<OrderDatail>()
-                .Property(e => e.Quantity)
-                .IsFixedLength();
-
-            modelBuilder.Entity<OrderDatail>()
-                .Property(e => e.intoMoney)
-                .HasPrecision(18, 0);
+            modelBuilder.Entity<Delivery>()
+                .HasMany(e => e.Orders)
+                .WithOptional(e => e.Delivery)
+                .HasForeignKey(e => e.id_deli);
 
             modelBuilder.Entity<Order>()
-                .HasMany(e => e.OrderDatails)
-                .WithRequired(e => e.Order)
-                .WillCascadeOnDelete(false);
+                .Property(e => e.total)
+                .HasPrecision(18, 0);
 
             modelBuilder.Entity<Product>()
                 .Property(e => e.productDescription)
@@ -92,14 +86,20 @@ namespace WebApplication1.Models
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Product>()
-                .HasMany(e => e.OrderDatails)
+                .HasMany(e => e.Orders)
                 .WithRequired(e => e.Product)
+                .HasForeignKey(e => e.id_product)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Role>()
                 .HasMany(e => e.cusAuthe_Roles)
                 .WithRequired(e => e.Role)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Status>()
+                .HasMany(e => e.Orders)
+                .WithOptional(e => e.Status)
+                .HasForeignKey(e => e.id_stt);
         }
     }
 }

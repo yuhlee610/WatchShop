@@ -12,7 +12,7 @@ namespace WebApplication1.Models
         public Product()
         {
             Carts = new HashSet<Cart>();
-            OrderDatails = new HashSet<OrderDatail>();
+            Orders = new HashSet<Order>();
         }
 
         public int ID { get; set; }
@@ -50,6 +50,6 @@ namespace WebApplication1.Models
         public virtual Category Category { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderDatail> OrderDatails { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

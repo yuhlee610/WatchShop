@@ -385,5 +385,42 @@ namespace WebApplication1.Function
                 _context.SaveChanges();
             }
         }
+        public static void CreateOrder(int id_cus)
+        {
+            using(var _context=new DBDongho())
+            {
+                var listCart = GetListCart(id_cus);
+                foreach(var item in listCart)
+                {
+                    Order order = new Order() {
+                        id_product = item.id_product,
+                        id_deli = 1,
+                        id_user = id_cus,
+                        addressTo = "TP.HCM",
+                        createDate = DateTime.Now,
+                        id_stt = 1,
+                        requireDate = DateTime.Now.AddDays(3),
+                        quantity = item.count,
+                        total = item.count * item.Product.Price
+                    };
+                    _context.Orders.Add(order);
+                    _context.SaveChanges();
+                }
+            }
+        }
+        public static List<Order> GetListOrder(int id_cus)
+        {
+            using (var _context=new DBDongho())
+            {
+                return _context.Orders.Where(x => x.id_user == id_cus).Include("Product").Include("Delivery").Include("Status").ToList();
+            }
+        }
+        public static Order GetOrder(int id_user, int id_pro)
+        {
+            using(var _context=new DBDongho())
+            {
+                return _context.Orders.Where(x => x.id_user == id_user && x.id_product == id_pro).Include("Product").Include("Delivery").Include("Status").SingleOrDefault();
+            }
+        }
     }
 }

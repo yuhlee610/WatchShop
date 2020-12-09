@@ -135,6 +135,7 @@
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductViewController.cs" />
     <Compile Include="Function\func.cs" />
     <Compile Include="Global.asax.cs">
@@ -148,10 +149,11 @@
     <Compile Include="Models\cusAuthe_Roles.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\DBDongho.cs" />
+    <Compile Include="Models\Delivery.cs" />
     <Compile Include="Models\Order.cs" />
-    <Compile Include="Models\OrderDatail.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\Status.cs" />
     <Compile Include="Models\sysdiagram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -264,6 +266,8 @@
     <Content Include="Views\ProductView\Index.cshtml" />
     <Content Include="Views\ProductView\Detail.cshtml" />
     <Content Include="Views\Checkout\Index.cshtml" />
+    <Content Include="Views\Order\Index.cshtml" />
+    <Content Include="Views\Order\viewDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
